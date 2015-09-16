@@ -1,0 +1,68 @@
+install ubuntu 14.04.02 (as of writing)
+
+update and upgrade ubuntu to the latest version:
+	sudo apt-get update
+	sudo apt-get dist-upgrade
+
+setup openssh
+
+setup firewall
+	sudo ufw status (if inactive, perform the following firewall related steps)
+	sudo ufw limit 22/tcp
+	sudo ufw allow 8080/tcp
+	sudo ufw enable
+
+setup plone essentials:
+	sudo apt-et install build-essential python-dev libjpeg-dev supervisor nginx libav-tools libz-dev libxml2-dev libxslt-dev
+
+get plone from the web:
+	wget https://launchpad.net/plone/4.3/4.3.6/download/Plone-4.3.6-UnifiedInstaller.tgz
+	tar xf Plone-4.3.6-UnifiedInstaller.tgz
+	cd Plone-4.3.6-UnifiedInstaller
+	sudo ./install.sh zeo --without-ssl
+
+
+Install TinyMCE editor
+	cd /usr/local/Plone/zeocluster
+	sudo -u plone_buildout cp buildout.cfg buildout.orig
+	sudo -u plone_buildout nano buildout.cfg
+	# make your required changes
+	add Products.TinyMCE (in the [Buildout]-eggs section)
+	add collective.setdefaulteditor (in the [Buildout]-eggs section)
+	#rebuild the buildout
+	sudo -u plone_buildout bin/buildout
+	#restart the plone instance
+	sudo bin/plonectl restart (you cannot be plone_buildout for this operation)
+
+<o>
+Updating zeoserver.
+Updating client1.
+Updating client2.
+Updating backup.
+Updating zopepy.
+Updating unifiedinstaller.
+Updating precompiler.
+Compiling Python files.
+Compiling locale files.
+Error while compiling /usr/local/Plone/buildout-cache/eggs/python_gettext-1.2-py2.7.egg/pythongettext/tests/test5.po
+Error while compiling /usr/local/Plone/buildout-cache/eggs/python_gettext-1.2-py2.7.egg/pythongettext/tests/test_escape.po
+Updating setpermissions.
+setpermissions: Running # Dummy references to force this to execute after referenced parts
+echo /usr/local/Plone/zeocluster/var/backups yes > /dev/null
+chmod 600 .installed.cfg
+# Make sure anything we've created in var is r/w by our group
+find /usr/local/Plone/zeocluster/var -type d -exec chmod 770 {} \; 2> /dev/null
+find /usr/local/Plone/zeocluster/var -type f -exec chmod 660 {} \; 2> /dev/null
+# but not the egg cache
+chmod -R g-w /usr/local/Plone/zeocluster/var/.python-eggs
+find /usr/local/Plone/zeocluster/var -type d -exec chmod 770 {} \; 2> /dev/null
+find /usr/local/Plone/zeocluster/var -type f -exec chmod 660 {} \; 2> /dev/null
+chmod 754 /usr/local/Plone/zeocluster/bin/*
+chmod: cannot access ‘/usr/local/Plone/zeocluster/var/.python-eggs’: No such file or directory
+Versions had to be automatically picked.
+The following part definition lists the versions picked:
+[versions]
+plone.recipe.precompiler = 0.6
+</o>
+	
+	

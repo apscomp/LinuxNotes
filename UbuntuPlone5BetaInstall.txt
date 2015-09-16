@@ -1,0 +1,35 @@
+install ubuntu 14.04.02 (as of writing)
+
+update and upgrade ubuntu to the latest version:
+	sudo apt-get update
+	sudo apt-get dist-upgrade
+
+setup openssh
+
+setup firewall
+	sudo ufw status (if inactive, perform the following firewall related steps)
+	sudo ufw limit 22/tcp
+	sudo ufw allow 8080/tcp
+	sudo ufw enable
+
+setup plone essentials:
+	sudo apt-et install build-essential python-dev libjpeg-dev supervisor nginx libav-tools libz-dev libxml2-dev libxslt-dev
+
+get plone from the web:
+	wget https://launchpad.net/plone/5.0/5.0b2/+download/Plone-5.0b2-UnifiedInstaller-r1.tgz
+	tar xf Plone-5.0b2-UnifiedInstaller-r1.tgz
+	cd Plone-5.0b2-UnifiedInstaller-r1
+	sudo ./install.sh zeo --without-ssl
+
+
+Install TinyMCE editor
+	cd /usr/local/Plone/zeocluster
+	sudo -u plone_buildout cp buildout.cfg buildout.orig
+	sudo -u plone_buildout nano buildout.cfg
+	# make your required changes
+	add Products.TinyMCE (in the [Buildout]-eggs section)
+	add collective.setdefaulteditor (in the [Buildout]-eggs section)
+	#rebuild the buildout
+	sudo -u plone_buildout bin/buildout
+	#restart the plone instance
+	sudo bin/plonectl restart (you cannot be plone_buildout for this operation)
