@@ -1,0 +1,21 @@
+## Add a new user
+sudo adduser newser
+
+#Grant a user sudo privileges
+#as root
+>visudo
+
+#as an non-root admin
+>sudo visudo
+
+#Search for the line that looks like
+root  ALL=(ALL:ALL) ALL
+
+#add newser as an additioinal line
+newser  ALL=ALL(ALL:ALL) ALL
+
+
+#Deleting an existing user
+>sudo deluser newser
+#or
+>sudo deluser --remove-home newser
