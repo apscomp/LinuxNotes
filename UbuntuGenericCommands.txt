@@ -19,3 +19,7 @@ newser  ALL=ALL(ALL:ALL) ALL
 >sudo deluser newser
 #or
 >sudo deluser --remove-home newser
+
+
+#Install Developer tool chain
+>sudo apt-get install git build-essential linux-headers-`uname -r`
