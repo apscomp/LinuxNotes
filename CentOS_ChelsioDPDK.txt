@@ -1,3 +1,14 @@
+Add some top level guidelines of the rough procedure, so that you can document your notes in the proper order
+<pseudocode>
+Install OS
+Configure Huge Tables
+Install Network Driver for 10gbps card
+Install dpdk libraries
+Bind network to dpdk
+Install Seastar, configure it, verify it
+Install Scylla
+<pseudocode>
+
 Install CentOS 7
 
 The Chelsio Network driver is automatically installed
@@ -26,11 +37,10 @@ as root, open the file /etc/default/grub
 #Either, append the following line to GRUB_CMDLINE_LINUX env. variable, if the cpu supports 1GB Huge Pages
    default_hugepagesz=1GB hugepagesz=1G hugepages=4 intel_iommu=on
 #or, append the following line, if the CPU supports 2M HUGE PAGES
+   default_hugepagesz=2M hugepagesz=2M hugepages=512 intel_iommu=on"
 
-
-recompile grub to save setting, and then reboot
-grub2-mkconfig -o /boot/grub2/grub.cfg
-make sure, the server is restarted
+#Recompile grub to save setting, and then reboot
+r$ grub2-mkconfig -o /boot/grub2/grub.cfg
 
 Understanding the deploying Huge Pages:
 
